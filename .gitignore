@@ -174,3 +174,4 @@ cython_debug/
 .pypirc
 
 probar_api_cafecito.ipynb
+probar_dfs_uruguayo.ipynb
