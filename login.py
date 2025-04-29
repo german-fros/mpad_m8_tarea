@@ -7,12 +7,12 @@ USUARIOS = {
 }
 
 def login():
-    st.title("🔐 Iniciar Sesión")
-
     if "logged_in" not in st.session_state:
         st.session_state.logged_in = False
 
     if not st.session_state.logged_in:
+        st.title("🔐 Iniciar Sesión")
+
         with st.form("login_form"):
             usuario = st.text_input("Usuario")
             contraseña = st.text_input("Contraseña", type="password")
@@ -22,6 +22,7 @@ def login():
                 if usuario in USUARIOS and USUARIOS[usuario] == contraseña:
                     st.session_state.logged_in = True
                     st.session_state.usuario = usuario
+                    st.rerun()
                     st.success("Inicio de sesión exitoso. Recargá la página si no continúa.")
                 else:
                     st.error("Credenciales inválidas")

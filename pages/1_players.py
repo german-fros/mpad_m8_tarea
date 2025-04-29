@@ -1,5 +1,8 @@
 import streamlit as st
 from controllers.data_controller import load_data
+from login import login
+
+login()
 
 st.title("🏃 Estadísticas de Jugadores")
 

@@ -1,6 +1,9 @@
-from controllers.data_controller import load_match_data
-
 import streamlit as st
+
+from controllers.data_controller import load_match_data
+from login import login
+
+login()
 
 st.title("📊 Resultados de Partidos")
 
