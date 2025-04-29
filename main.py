@@ -1,3 +1,5 @@
+from login import login
+
 import streamlit as st
 
 st.set_page_config(
@@ -6,5 +8,8 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("⚽ Tarea M8 - MPAD2")
-st.write("Navega por el menú lateral para explorar estadísticas de jugadores y resultados de partidos.")
+login()
+
+
+st.title(f"⚽ Bienvenido, {st.session_state.usuario}")
+st.write("Usa el menú lateral para navegar entre las páginas.")
