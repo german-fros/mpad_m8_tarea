@@ -24,7 +24,7 @@ HEADERS = {"Authorization": "Bearer EAAHlp1ycWFIBOzFZASIPjVtB1n30C8jUBKHo"}
 
 def load_match_data() -> pd.DataFrame:
     """Carga datos de partidos desde la API y los devuelve como DataFrame."""
-    url = f"{BASE_URL}/competitions"
+    url = f"{BASE_URL}/matches/competition/Europe-Champions-League-2024-2025/season/10456"
     response = requests.get(url, headers=HEADERS)
 
     if response.status_code != 200:
@@ -32,4 +32,8 @@ def load_match_data() -> pd.DataFrame:
 
     data = response.json()
     df = pd.DataFrame(data)
+
+    # Filtrar por stage
+    df = df[df['stage'] == '23663']
+    
     return df
