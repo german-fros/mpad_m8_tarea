@@ -4,6 +4,7 @@ from models.player_model import Player
 import sqlite3
 import pandas as pd
 from pathlib import Path
+import requests
 
 DB_PATH = Path("data/processed/processed_stats_futbol_uruguayo.db")
 
@@ -17,28 +18,18 @@ def load_data(season: int = None) -> pd.DataFrame:
     conn.close()
     return df
 
-def extract_matches(api_data):
-    return [
-        Match(
-            m['date'], m['home_team'], m['away_team'],
-            int(m['home_score']), int(m['away_score'])
-        )
-        for m in api_data
-    ]
 
+BASE_URL = "https://api-cafecito.onrender.com"
+HEADERS = {"Authorization": "Bearer EAAHlp1ycWFIBOzFZASIPjVtB1n30C8jUBKHo"}
 
-def build_players(df):
-    players = []
-    for _, row in df.iterrows():
-        p = Player(row['Name'], row['Minutes Played'], row['Goals'], row['Assists'])
-        players.append(p)
-    return players
+def load_match_data() -> pd.DataFrame:
+    """Carga datos de partidos desde la API y los devuelve como DataFrame."""
+    url = f"{BASE_URL}/competitions"
+    response = requests.get(url, headers=HEADERS)
 
-def load_data(season: int = None) -> pd.DataFrame:
-    conn = sqlite3.connect(DB_PATH)
-    query = "SELECT * FROM stats"
-    if season:
-        query += f" WHERE Season = {season}"
-    df = pd.read_sql_query(query, conn)
-    conn.close()
+    if response.status_code != 200:
+        raise Exception(f"Error {response.status_code}: {response.text}")
+
+    data = response.json()
+    df = pd.DataFrame(data)
     return df
