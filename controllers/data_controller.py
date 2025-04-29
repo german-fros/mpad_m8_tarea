@@ -5,6 +5,18 @@ import sqlite3
 import pandas as pd
 from pathlib import Path
 
+DB_PATH = Path("data/processed/processed_stats_futbol_uruguayo.db")
+
+def load_data(season: int = None) -> pd.DataFrame:
+    """Carga los datos desde SQLite. Si se indica una temporada, filtra por ella."""
+    conn = sqlite3.connect(DB_PATH)
+    query = "SELECT * FROM stats"
+    if season:
+        query += f" WHERE Season = {season}"
+    df = pd.read_sql_query(query, conn)
+    conn.close()
+    return df
+
 def extract_matches(api_data):
     return [
         Match(
@@ -21,8 +33,6 @@ def build_players(df):
         p = Player(row['Name'], row['Minutes Played'], row['Goals'], row['Assists'])
         players.append(p)
     return players
-
-DB_PATH = Path("data/processed_stats_futbol_uruguayo.db")
 
 def load_data(season: int = None) -> pd.DataFrame:
     conn = sqlite3.connect(DB_PATH)
