@@ -2,8 +2,7 @@ import streamlit as st
 
 # Usuarios permitidos (clave = usuario, valor = contraseña)
 USUARIOS = {
-    "admin": "sportsdatacampus",
-    "invitado": "MPAD_M8"
+    "admin": "admin",
 }
 
 def login():
