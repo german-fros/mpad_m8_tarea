@@ -76,7 +76,7 @@ if not top10.empty:
     norm = plt.Normalize(valores.min(), valores.max())
     colors = cm.Wistia(norm(valores))  # Usamos cmap "Blues"
 
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(7, 4.5))
     ax.barh(top10["Player"], valores, color=colors)
 
     # Estilo minimalista
