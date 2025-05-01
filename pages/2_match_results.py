@@ -4,6 +4,7 @@ import matplotlib.cm as cm
 import pandas as pd
 
 from controllers.data_controller import load_match_data
+from common.pdf_generator import exportar_resultados_pdf
 from login import login
 
 # login()
@@ -108,6 +109,48 @@ ax.set_yticklabels(top_equipos.index, fontweight='bold', color='white')
 
 st.pyplot(fig)
 
-# Guardar imagen para PDF (opcional)
-fig.savefig("grafico_resultados.png", dpi=300, bbox_inches="tight", transparent=True)
+# Crear versión alternativa del gráfico con texto negro para PDF
+fig_pdf, ax_pdf = plt.subplots(figsize=(7, 4))
+ax_pdf.barh(top_equipos.index, valores, color=colors)
 
+# Estilo visual limpio
+ax_pdf.spines['top'].set_visible(False)
+ax_pdf.spines['right'].set_visible(False)
+ax_pdf.spines['bottom'].set_visible(False)
+ax_pdf.spines['left'].set_visible(False)
+ax_pdf.xaxis.set_visible(False)
+
+fig_pdf.patch.set_facecolor('none')
+ax_pdf.set_facecolor('none')
+
+# Etiquetas en negro
+for i, (equipo, valor) in enumerate(zip(top_equipos.index, valores)):
+    ax_pdf.annotate(
+        str(int(valor)),
+        xy=(valor, i),
+        xytext=(5, 0),
+        textcoords='offset points',
+        va='center',
+        ha='left',
+        fontsize=10,
+        color='black'
+    )
+
+# Título y estilo
+ax_pdf.set_title(f"Top 10 Equipos por {columna}", color='black', fontweight='bold')
+ax_pdf.invert_yaxis()
+ax_pdf.tick_params(axis='y', size=0, colors='black', labelsize=10, pad=10)
+ax_pdf.set_yticks(range(len(top_equipos)))
+ax_pdf.set_yticklabels(top_equipos.index, fontweight='bold', color='black')
+
+# Guardar imagen
+fig_pdf.savefig("grafico_resultados.png", dpi=300, bbox_inches="tight", transparent=True)
+plt.close(fig_pdf)
+
+with open(exportar_resultados_pdf(df, columnas_mostrar), "rb") as f:
+    st.download_button(
+        label="📄 Exportar a PDF",
+        data=f,
+        file_name="resultados_partidos.pdf",
+        mime="application/pdf"
+    )
