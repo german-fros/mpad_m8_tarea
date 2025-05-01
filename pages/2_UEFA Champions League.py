@@ -7,6 +7,8 @@ from controllers.data_controller import load_match_data
 from common.pdf_generator import exportar_resultados_pdf
 from login import login
 
+st.set_page_config(page_title="UEFA Champions League", page_icon="", layout="wide")
+
 login()
 
 st.title("UEFA Champions League")
@@ -110,7 +112,7 @@ ax.set_yticklabels(top_equipos.index, fontweight='bold', color='white')
 st.pyplot(fig)
 
 # Crear versión alternativa del gráfico con texto negro para PDF
-fig_pdf, ax_pdf = plt.subplots(figsize=(7, 4))
+fig_pdf, ax_pdf = plt.subplots(figsize=(7, 4.5))
 ax_pdf.barh(top_equipos.index, valores, color=colors)
 
 # Estilo visual limpio

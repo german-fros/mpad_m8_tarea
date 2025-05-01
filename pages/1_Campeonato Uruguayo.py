@@ -9,6 +9,8 @@ from controllers.data_controller import load_data
 from login import login
 from common.pdf_generator import exportar_pdf_stats
 
+st.set_page_config(page_title="Campeonato Uruguayo", page_icon="", layout="wide")
+
 login()
 
 st.title("Estadísticas de Jugadores")
@@ -117,7 +119,7 @@ if not top10.empty:
     st.pyplot(fig)
 
     # Crear versión alternativa del gráfico con texto negro para el PDF
-    fig_pdf, ax_pdf = plt.subplots(figsize=(8, 5))
+    fig_pdf, ax_pdf = plt.subplots(figsize=(7, 4.5))
     ax_pdf.barh(top10["Player"], valores, color=colors)
 
     # Estilo limpio
