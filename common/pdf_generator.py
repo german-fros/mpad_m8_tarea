@@ -17,7 +17,7 @@ class JugadoresPDF(FPDF):
         self.set_font("Arial", "I", 8)
         self.cell(0, 10, f"Página {self.page_no()}", align="C")
 
-def exportar_pdf(df, columnas, season, nombre_archivo="jugadores_stats.pdf"):
+def exportar_pdf_stats(df, columnas, season, nombre_archivo="jugadores_stats.pdf"):
     pdf = JugadoresPDF(season)
     pdf.add_page()
     pdf.set_text_color(0, 0, 0)
@@ -73,4 +73,38 @@ def exportar_pdf(df, columnas, season, nombre_archivo="jugadores_stats.pdf"):
 
     pdf.output(nombre_archivo)
     return nombre_archivo
+
+def exportar_resultados_pdf(df, columnas, nombre_archivo="resultados_partidos.pdf"):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(0, 10, "UEFA Champions League", ln=True, align="C")
+    pdf.cell(0, 10, "Resultados de Partidos", ln=True, align="C")
+    pdf.ln(5)
+    pdf.set_font("Arial", "", 10)
+
+    col_width = 190 / len(columnas)
+
+    # Encabezado
+    pdf.set_fill_color(230, 230, 230)
+    for col in columnas:
+        pdf.cell(col_width, 8, col, border=1, align="C", fill=True)
+    pdf.ln()
+
+    # Filas
+    for _, row in df[columnas].iterrows():
+        for col in columnas:
+            texto = str(row[col])[:20]
+            pdf.cell(col_width, 8, texto, border=1, align="C")
+        pdf.ln()
+
+    # Agregar gráfico de resultados
+    if os.path.exists("grafico_resultados.png"):
+        pdf.ln(10)
+        pdf.image("grafico_resultados.png", x=10, w=190)
+        os.remove("grafico_resultados.png")
+
+    pdf.output(nombre_archivo)
+    return nombre_archivo
+
 
