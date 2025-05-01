@@ -18,10 +18,10 @@ st.markdown("---")
 # Cargar datos desde la API
 try:
     df = load_match_data()
-
     df["home_score"] = pd.to_numeric(df["home_score"], errors="coerce").fillna(0).astype(int)
     df["away_score"] = pd.to_numeric(df["away_score"], errors="coerce").fillna(0).astype(int)
 
+    df_resultados = df.copy()  # <-- esta copia será usada en el gráfico
 except Exception as e:
     st.error(f"Error al cargar los datos: {e}")
     st.stop()
@@ -44,7 +44,7 @@ st.dataframe(df[columnas_mostrar])
 
 st.markdown("---")
 
-df = df.drop_duplicates(subset="match_id")
+df_resultados = df_resultados.drop_duplicates(subset="match_id")
 
 st.markdown("### Top 10 Equipos")
 
@@ -55,13 +55,13 @@ orden_metrica = st.selectbox("Ordenar:", ["Mayor a menor", "Menor a mayor"])
 df_goles = pd.DataFrame()
 
 # Goles a favor: sumando por equipo como local y visitante
-goles_local = df.groupby("home_team")["home_score"].sum()
-goles_visitante = df.groupby("away_team")["away_score"].sum()
+goles_local = df_resultados.groupby("home_team")["home_score"].sum()
+goles_visitante = df_resultados.groupby("away_team")["away_score"].sum()
 goles_favor = goles_local.add(goles_visitante, fill_value=0)
 
 # Goles en contra
-goles_contra_local = df.groupby("home_team")["away_score"].sum()
-goles_contra_visitante = df.groupby("away_team")["home_score"].sum()
+goles_contra_local = df_resultados.groupby("home_team")["away_score"].sum()
+goles_contra_visitante = df_resultados.groupby("away_team")["home_score"].sum()
 goles_contra = goles_contra_local.add(goles_contra_visitante, fill_value=0)
 
 df_goles["Goles a favor"] = goles_favor
