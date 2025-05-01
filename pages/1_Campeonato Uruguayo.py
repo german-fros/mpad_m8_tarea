@@ -9,7 +9,7 @@ from controllers.data_controller import load_data
 from login import login
 from common.pdf_generator import exportar_pdf_stats
 
-st.set_page_config(page_title="Campeonato Uruguayo", page_icon="", layout="wide")
+st.set_page_config(page_title="Campeonato Uruguayo", page_icon="", layout="centered")
 
 login()
 

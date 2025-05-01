@@ -5,7 +5,7 @@ import streamlit as st
 st.set_page_config(
     page_title="Streamlit - German Fros",
     page_icon="⚽",
-    layout="wide"
+    layout="centered"
 )
 
 login()

@@ -7,7 +7,7 @@ from controllers.data_controller import load_match_data
 from common.pdf_generator import exportar_resultados_pdf
 from login import login
 
-st.set_page_config(page_title="UEFA Champions League", page_icon="", layout="wide")
+st.set_page_config(page_title="UEFA Champions League", page_icon="", layout="centered")
 
 login()
 
