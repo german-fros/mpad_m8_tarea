@@ -8,6 +8,7 @@ class JugadoresPDF(FPDF):
 
     def header(self):
         self.set_font("Arial", "B", 12)
+        self.cell(0, 10, f"Campeonato Uruguayo", border=False, ln=True, align="C")
         self.cell(0, 10, f"Estadísticas de Jugadores | Temporada {self.season}", border=False, ln=True, align="C")
         self.ln(5)
 
