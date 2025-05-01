@@ -9,9 +9,11 @@ from controllers.data_controller import load_data
 from login import login
 from common.pdf_generator import exportar_pdf
 
-login()
+# login()
 
-st.title("🏃 Estadísticas de Jugadores")
+st.title("Estadísticas de Jugadores")
+st.title("🇺🇾 Campeonato Uruguayo 🇺🇾")
+st.markdown("---")
 
 # Temporadas disponibles
 temporadas = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
@@ -65,6 +67,8 @@ df[columna_orden] = pd.to_numeric(df[columna_orden], errors="coerce")
 df_ordenado = df.sort_values(by=columna_orden, ascending=False).head(10)
 
 st.dataframe(df_ordenado[columnas_mostrar])
+
+st.markdown("---")
 
 # Asegurar tipo numérico y ordenar por métrica elegida
 df[columna_orden] = pd.to_numeric(df[columna_orden], errors="coerce")
