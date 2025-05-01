@@ -9,7 +9,7 @@ from controllers.data_controller import load_data
 from login import login
 from common.pdf_generator import exportar_pdf_stats
 
-# login()
+login()
 
 st.title("Estadísticas de Jugadores")
 st.title("🇺🇾 Campeonato Uruguayo 🇺🇾")

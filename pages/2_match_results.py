@@ -7,7 +7,7 @@ from controllers.data_controller import load_match_data
 from common.pdf_generator import exportar_resultados_pdf
 from login import login
 
-# login()
+login()
 
 st.title("UEFA Champions League")
 st.title("📊 Resultados | Fase de grupos")
