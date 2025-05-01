@@ -7,7 +7,7 @@ import pandas as pd
 
 from controllers.data_controller import load_data
 from login import login
-from common.pdf_generator import exportar_pdf
+from common.pdf_generator import exportar_pdf_stats
 
 # login()
 
@@ -158,7 +158,7 @@ if not top10.empty:
 else:
     st.warning(f"No hay datos suficientes para mostrar el Top 10 de {metrica_orden}.")
 
-with open(exportar_pdf(df_ordenado, columnas_mostrar, season), "rb") as f:
+with open(exportar_pdf_stats(df_ordenado, columnas_mostrar, season), "rb") as f:
     st.download_button(
         label="📄 Exportar a PDF",
         data=f,
